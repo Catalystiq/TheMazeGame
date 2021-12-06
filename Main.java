@@ -36,40 +36,51 @@ public class Main {
       frame.setVisible(true);
 
       //Splash screen
-      frame.add(splashPanel);
-      frame.setTitle("24/7 Studios");
-      frame.setLocationRelativeTo(null);
-      frame.setBackground(Color.BLACK);
-      splashPanel.add(splashImg);
-      splashPanel.add(start);
-      frame.pack();
-      
-      
-      start.addActionListener(e -> main.play(frame, splashPanel, gamePanel));
-      //I guess we needed a try and catch thing so yeah this exits, but really only to wait a couple of seconds
-//       try {
-//          Thread.sleep(5000);//Splash Screen cooldown
-//       } catch (Exception e) {
-//          System.out.println(e);
-//       }
-//       
+//       frame.add(splashPanel);
+//       frame.setTitle("24/7 Studios");
+//       frame.setLocationRelativeTo(null);
+//       frame.setBackground(Color.BLACK);
+//       splashPanel.add(splashImg);
+//       splashPanel.add(start);
+//       frame.pack();
 
+        JOptionPane.showMessageDialog(null,
+               "Splash Screen", "TheMazeGame",
+               JOptionPane.INFORMATION_MESSAGE, icon);
       
-
       
-
-   }
-   
-   public void play(JFrame frame, JPanel splashPanel, JPanel gamePanel){
-      frame.remove(splashPanel);//Removing the splash panel
+      //start.addActionListener(e -> main.play(frame, splashPanel, gamePanel));
+     
       gamePanel = new Game();//Importing a panel from a class
       frame.addKeyListener(new Game());
       gamePanel.setFocusable(true);
       gamePanel.setPreferredSize(SCREEN_SIZE);
       gamePanel.setBackground(FIELD);
       frame.add(gamePanel);
-      frame.setTitle("The Maze Game");
+      frame.setTitle("The Soccer Game");
       frame.setLocationRelativeTo(null);
       frame.pack();
+      
+
+      
+
    }
+   
+//    public void play(JFrame frame, JPanel splashPanel, JPanel gamePanel){
+//       frame.remove(splashPanel);//Removing the splash panel
+//       gamePanel = new Game();//Importing a panel from a class
+//       frame.addKeyListener(new Game());
+//       gamePanel.setFocusable(true);
+//       gamePanel.setPreferredSize(SCREEN_SIZE);
+//       gamePanel.setBackground(FIELD);
+//       frame.add(gamePanel);
+//       frame.setTitle("The Maze Game");
+//       frame.setLocationRelativeTo(null);
+//       frame.pack();
+//    }
+
+      //frame.remove(splashPanel);//Removing the splash panel
+      
+      //Setting up the new Game Board
+
 }
