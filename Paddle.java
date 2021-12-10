@@ -3,15 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Paddle extends Rectangle{
-    
-    int id;//This is for paddles like 1 or 2
-    int yVelocity;//How fast the paddle is moving up or down
+    int yVelocity;
     int xVelocity;
-    int speed = 3;//This keeps track on what speed the paddles move, this is only for more stability but is not neccesary
+    int speed = 3;
 
     Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT){
         super(x,y,PADDLE_WIDTH,PADDLE_HEIGHT);
-        //this.id=id;
     }
 
     public void keyPressed(KeyEvent e){
