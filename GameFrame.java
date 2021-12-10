@@ -3,7 +3,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class GameFrame extends JFrame{//This pulls in the methods from Jframe to then be used a little better
+public class GameFrame extends JFrame{
 
     GamePanel panel;
 
@@ -14,9 +14,9 @@ public class GameFrame extends JFrame{//This pulls in the methods from Jframe to
         this.setTitle("Pong Game");
         this.setResizable(false);
         this.setBackground(new Color(0,0,0));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//This closes the app instead of doing bullshit
-        this.pack();//This will make this fit around the game panel so it does it automaticly so thats cool
-        this.setLocationRelativeTo(null);//Makes the frame spawn in the middle of the screen
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 }
