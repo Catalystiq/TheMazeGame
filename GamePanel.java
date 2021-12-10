@@ -1,23 +1,20 @@
-
-/*Imports*/
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
-
-    static final int GAME_WIDTH = 1000;// Alright so the reason that there is a static and final is to make sure
-                                       // everything is just one variable and does not turn into many
+    
+    //global variables
+    static final int GAME_WIDTH = 1000;
     static final int GAME_HEIGHT = 556;
 
-    static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);// WTF
+    static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 
-    //static final int BALL_DIAMETER = 20;// Setting demesions for the objects in the game
     static final int PADDLE_WIDTH = 50;
     static final int PADDLE_HEIGHT = 50;
 
-    //Planning instances
+    //instances
     Thread gameThread;
     Image image;
     Graphics graphics;
@@ -43,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(new AL());
         this.setPreferredSize(SCREEN_SIZE);
 
-        gameThread = new Thread(this);//Making a thread
+        gameThread = new Thread(this);
         gameThread.start();
     }
     
@@ -65,16 +62,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void newPaddles() {
-        //Calling new paddles using the instances and the constructer to make it fast and shit
         paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);//X,Y,W,H
     }
 
     public void paint(Graphics g) {
         image = createImage(getWidth(),getHeight());
         graphics = image.getGraphics();
-
         draw(graphics);
-
         g.drawImage(image, 0, 0, this);
     }
 
@@ -136,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void run() {
         //game loop
-        long lastTime = System.nanoTime();//This makes a long value of shit
+        long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000/amountOfTicks;
         double delta = 0;
