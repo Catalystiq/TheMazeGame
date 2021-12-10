@@ -1,5 +1,3 @@
-
-/*Imports*/
 import javax.swing.*;
 
 public class PongGame extends JFrame{
