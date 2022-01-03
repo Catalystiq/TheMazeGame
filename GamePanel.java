@@ -32,6 +32,9 @@ public class GamePanel extends JPanel implements Runnable {
     Obstacle topWall;
     Obstacle wallTwo;
     Obstacle middleWall;
+    Obstacle wallThree;
+    Obstacle wallFour;
+    Door firstDoor;
 
     GamePanel() {
         newPaddles();
@@ -57,6 +60,26 @@ public class GamePanel extends JPanel implements Runnable {
       topWall = new Obstacle(GAME_WIDTH/2-50, 0, 60, 305);
       wallTwo = new Obstacle(225, 245, 285, 60);
       middleWall = new Obstacle(GAME_WIDTH/2+85, 85, 60, 335);
+      wallThree = new Obstacle(625, 85, 285, 60);
+      wallFour = new Obstacle(GAME_WIDTH-285, 245, 285, 60);
+      firstDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 85, 85);
+    }
+
+    public void removeObstacles(){
+        borderBottom = null;
+        borderTop = null;
+        borderLeft = null;
+        borderRight = null;
+
+        bottomWall = null;
+        bottomBlock = null;
+        sideWall = null;
+        wallOne = null;
+        topWall = null;
+        wallTwo = null;
+        middleWall = null;
+        wallThree = null;
+        wallFour = null;
     }
 
 
@@ -86,6 +109,9 @@ public class GamePanel extends JPanel implements Runnable {
         topWall.draw(g);
         wallTwo.draw(g);
         middleWall.draw(g);
+        wallThree.draw(g);
+        wallFour.draw(g);
+        firstDoor.draw(g);
     }
 
     public void move() {
@@ -124,6 +150,12 @@ public class GamePanel extends JPanel implements Runnable {
           newPaddles();
       }
       if(middleWall.intersects(paddle1)){
+          newPaddles();
+      }
+      if(wallThree.intersects(paddle1)){
+          newPaddles();
+      }
+      if(wallFour.intersects(paddle1)){
           newPaddles();
       }
     }
