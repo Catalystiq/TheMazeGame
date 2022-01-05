@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int PADDLE_WIDTH = 50;
     static final int PADDLE_HEIGHT = 50;
     static int deaths = 0;
+    static int level = 0;
 
     //instances
     Thread gameThread;
@@ -42,6 +43,9 @@ public class GamePanel extends JPanel implements Runnable {
     Barrier barrierLeft;
     Barrier barrierRight;
 
+    Barrier barrierOne;
+    Barrier barrierTwo;
+
     GamePanel() {
         newPaddles();
         newObstacles();
@@ -69,6 +73,14 @@ public class GamePanel extends JPanel implements Runnable {
         wallThree = new Obstacle(625, 85, 285, 60);
         wallFour = new Obstacle(GAME_WIDTH-285, 245, 285, 60);
         firstDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 65, 65);
+
+        barrierBottom = new Barrier(0, GAME_HEIGHT-6, 0, 0);
+        barrierTop = new Barrier(0, 0, 0, 0);
+        barrierLeft = new Barrier(0, 0, 0, 0);
+        barrierRight = new Barrier(GAME_WIDTH-6, 0, 0, 0);
+
+        barrierOne = new Barrier(85, 85, 0, 0);
+        barrierTwo = new Barrier(85, GAME_HEIGHT-140, 0, 0);
     }
 
     public void removeObstacles(){
@@ -94,16 +106,21 @@ public class GamePanel extends JPanel implements Runnable {
         barrierTop = new Barrier(0, 0, GAME_WIDTH, 6);
         barrierLeft = new Barrier(0, 0, 6, GAME_HEIGHT);
         barrierRight = new Barrier(GAME_WIDTH-6, 0, 6, GAME_HEIGHT);
+
+        barrierOne = new Barrier(85, 85, 285, 60);
+        barrierTwo = new Barrier(85, GAME_HEIGHT-140, GAME_WIDTH-185, 160);
     }
 
     public void newPaddles() {
         paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
+        level += 1;
+        System.out.println("level: " + level);
     }
 
     public void death(){
         paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         deaths += 1;
-        System.out.println(deaths);
+        System.out.println("deaths: " + deaths);
     }
 
     public void paint(Graphics g) {
@@ -135,6 +152,9 @@ public class GamePanel extends JPanel implements Runnable {
         barrierTop.draw(g);
         barrierLeft.draw(g);
         barrierRight.draw(g);
+
+        barrierOne.draw(g);
+        barrierTwo.draw(g);
     }
 
     public void move() {
@@ -158,7 +178,7 @@ public class GamePanel extends JPanel implements Runnable {
             death();
         }
         if(bottomBlock.intersects(paddle1)){
-            death();
+            //death();
         }
         if(sideWall.intersects(paddle1)){
             death();
@@ -185,6 +205,26 @@ public class GamePanel extends JPanel implements Runnable {
             removeObstacles();
             newPaddles();
             newBarriers();
+        }
+
+        if(barrierBottom.intersects(paddle1)){
+            death();
+        }
+        if(barrierTop.intersects(paddle1)){
+            death();
+        }
+        if(barrierLeft.intersects(paddle1)){
+            death();
+        }
+        if(barrierRight.intersects(paddle1)){
+            death();
+        }
+
+        if(barrierOne.intersects(paddle1)){
+            death();
+        }
+        if(barrierTwo.intersects(paddle1)){
+            death();
         }
     }
 
