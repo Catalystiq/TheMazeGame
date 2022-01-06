@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Barrier barrierOne;
     Barrier barrierTwo;
+    MovingBarrier moveOne;
 
     GamePanel() {
         newPaddles();
@@ -81,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         barrierOne = new Barrier(85, 85, 0, 0);
         barrierTwo = new Barrier(85, GAME_HEIGHT-140, 0, 0);
+        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0);
     }
 
     public void removeObstacles(){
@@ -107,8 +109,9 @@ public class GamePanel extends JPanel implements Runnable {
         barrierLeft = new Barrier(0, 0, 6, GAME_HEIGHT);
         barrierRight = new Barrier(GAME_WIDTH-6, 0, 6, GAME_HEIGHT);
 
-        barrierOne = new Barrier(85, 85, 285, 60);
+        barrierOne = new Barrier(0, 0, GAME_WIDTH, 160);
         barrierTwo = new Barrier(85, GAME_HEIGHT-140, GAME_WIDTH-185, 160);
+        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 50, 50);
     }
 
     public void newPaddles() {
@@ -155,10 +158,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         barrierOne.draw(g);
         barrierTwo.draw(g);
+        moveOne.draw(g);
     }
 
     public void move() {
         paddle1.move();
+        moveOne.move();
     }
     
     public void checkCollision(){

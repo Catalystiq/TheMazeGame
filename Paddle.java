@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class Paddle extends Rectangle{
     int yVelocity;
     int xVelocity;
-    int speed = 3;
+    int speed = 20;
 
     Paddle(int x, int y, int w, int h){
         super(x, y, w, h);
