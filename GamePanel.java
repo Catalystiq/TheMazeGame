@@ -46,6 +46,11 @@ public class GamePanel extends JPanel implements Runnable {
     Barrier barrierOne;
     Barrier barrierTwo;
     MovingBarrier moveOne;
+    MovingBarrier moveTwo;
+    MovingBarrier moveThree;
+    MovingBarrier moveFour;
+    MovingBarrier moveFive;
+    Door secondDoor;
 
     GamePanel() {
         newPaddles();
@@ -82,7 +87,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         barrierOne = new Barrier(85, 85, 0, 0);
         barrierTwo = new Barrier(85, GAME_HEIGHT-140, 0, 0);
-        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0);
+        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
+        moveTwo = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
+        moveThree = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
+        moveFour = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
+        moveFive = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
+        secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 65, 65);
     }
 
     public void removeObstacles(){
@@ -111,7 +121,28 @@ public class GamePanel extends JPanel implements Runnable {
 
         barrierOne = new Barrier(0, 0, GAME_WIDTH, 160);
         barrierTwo = new Barrier(85, GAME_HEIGHT-140, GAME_WIDTH-185, 160);
-        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 50, 50);
+        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 50, 50, 5);
+        moveTwo = new MovingBarrier(248, GAME_HEIGHT/2, 50, 50, 7);
+        moveThree = new MovingBarrier(411, GAME_HEIGHT/2, 50, 50, 9);
+        moveFour = new MovingBarrier(574, GAME_HEIGHT/2, 50, 50, 10);
+        moveFive = new MovingBarrier(737, GAME_HEIGHT/2, 50, 50, 11);
+        secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 65, 65);
+    }
+
+    public void removeBarriers(){
+        barrierBottom = new Barrier(0, GAME_HEIGHT-6, 0, 0);
+        barrierTop = new Barrier(0, 0, 0, 0);
+        barrierLeft = new Barrier(0, 0, 0, 0);
+        barrierRight = new Barrier(GAME_WIDTH-6, 0, 0, 0);
+
+        barrierOne = new Barrier(0, 0, 0, 0);
+        barrierTwo = new Barrier(85, GAME_HEIGHT-140, 0, 0);
+        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 50, 0, 0);
+        moveTwo = new MovingBarrier(248, GAME_HEIGHT/2, 50, 0, 0);
+        moveThree = new MovingBarrier(411, GAME_HEIGHT/2, 50, 0, 0);
+        moveFour = new MovingBarrier(574, GAME_HEIGHT/2, 50, 0, 0);
+        moveFive = new MovingBarrier(737, GAME_HEIGHT/2, 50, 0, 0);
+        secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 0, 0);
     }
 
     public void newPaddles() {
@@ -159,11 +190,20 @@ public class GamePanel extends JPanel implements Runnable {
         barrierOne.draw(g);
         barrierTwo.draw(g);
         moveOne.draw(g);
+        moveTwo.draw(g);
+        moveThree.draw(g);
+        moveFour.draw(g);
+        moveFive.draw(g);
+        secondDoor.draw(g);
     }
 
     public void move() {
         paddle1.move();
         moveOne.move();
+        moveTwo.move();
+        moveThree.move();
+        moveFour.move();
+        moveFive.move();
     }
     
     public void checkCollision(){
@@ -229,6 +269,24 @@ public class GamePanel extends JPanel implements Runnable {
             death();
         }
         if(barrierTwo.intersects(paddle1)){
+            death();
+        }
+        if(moveOne.intersects(paddle1)){
+            death();
+        }
+        if(moveTwo.intersects(paddle1)){
+            death();
+        }
+        if(moveTwo.intersects(paddle1)){
+            death();
+        }
+        if(moveThree.intersects(paddle1)){
+            death();
+        }
+        if(moveFour.intersects(paddle1)){
+            death();
+        }
+        if(moveFive.intersects(paddle1)){
             death();
         }
     }

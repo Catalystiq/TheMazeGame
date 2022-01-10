@@ -5,8 +5,9 @@ public class MovingBarrier extends Rectangle{
    boolean up = false;
    boolean down = true;
 
-   MovingBarrier(int x, int y, int w, int h){
+   MovingBarrier(int x, int y, int w, int h, int speed){
       super(x, y, w, h);
+      this.speed = speed;
    }
    
    public void draw(Graphics g){
@@ -15,7 +16,6 @@ public class MovingBarrier extends Rectangle{
    }
 
    public void move(){
-      //System.out.println(y);
       if(down){
          if(y < 366){
             y += speed;  
@@ -34,17 +34,5 @@ public class MovingBarrier extends Rectangle{
             up = false;
          }
       }
-
-
-      //   if(y < 366){
-      //       y -= speed;
-      //  }
-      //   if(y > 160){
-      //       y += speed;
-      //  }else if(y <= 160){
-      //     y -= 5;
-      //  } if(y >= 366){
-      //    y -= 20;
-      // }
    }
 }
