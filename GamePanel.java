@@ -52,6 +52,17 @@ public class GamePanel extends JPanel implements Runnable {
     MovingBarrier moveFive;
     Door secondDoor;
 
+    Enemy enemyOne;
+    Enemy enemyTwo;
+    Enemy enemyThree;
+    Enemy enemyFour;
+    EnemyLatitude latitudeOne;
+    EnemyLatitude latitudeTwo;
+    EnemyLatitude latitudeThree;
+    EnemyLatitude latitudeFour;
+    EnemyLatitude latitudeFive;
+    EnemyLatitude latitudeSix;
+
     GamePanel() {
         newPaddles();
         newObstacles();
@@ -93,6 +104,17 @@ public class GamePanel extends JPanel implements Runnable {
         moveFour = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
         moveFive = new MovingBarrier(85, GAME_HEIGHT/2, 0, 0, 0);
         secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 65, 65);
+
+        enemyOne = new Enemy(0, GAME_HEIGHT-6, 0, 0);
+        enemyTwo = new Enemy(0, 0, 0, 0);
+        enemyThree = new Enemy(0, 0, 0, 0);
+        enemyFour = new Enemy(GAME_WIDTH-6, 0, 0, 0);
+        latitudeOne = new EnemyLatitude(85, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeTwo = new EnemyLatitude(248, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeThree = new EnemyLatitude(411, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeFour = new EnemyLatitude(574, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeFive = new EnemyLatitude(737, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeSix = new EnemyLatitude(900, GAME_HEIGHT/2, 0, 0, 0);
     }
 
     public void removeObstacles(){
@@ -145,6 +167,20 @@ public class GamePanel extends JPanel implements Runnable {
         secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 0, 0);
     }
 
+    public void newEnemies(){
+        enemyOne = new Enemy(0, GAME_HEIGHT-6, GAME_WIDTH, 6);
+        enemyTwo = new Enemy(0, 0, GAME_WIDTH, 6);
+        enemyThree = new Enemy(0, 0, 6, GAME_HEIGHT);
+        enemyFour = new Enemy(GAME_WIDTH-6, 0, 6, GAME_HEIGHT);
+
+        latitudeOne = new EnemyLatitude(85, GAME_HEIGHT/2, 50, 50, 5);
+        latitudeTwo = new EnemyLatitude(248, GAME_HEIGHT/2, 50, 50, 7);
+        latitudeThree = new EnemyLatitude(411, GAME_HEIGHT/2, 50, 50, 9);
+        latitudeFour = new EnemyLatitude(574, GAME_HEIGHT/2, 50, 50, 11);
+        latitudeFive = new EnemyLatitude(737, GAME_HEIGHT/2, 50, 50, 13);
+        latitudeSix = new EnemyLatitude(900, GAME_HEIGHT/2, 50, 50, 15);
+    }
+
     public void newPaddles() {
         paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         level += 1;
@@ -195,6 +231,18 @@ public class GamePanel extends JPanel implements Runnable {
         moveFour.draw(g);
         moveFive.draw(g);
         secondDoor.draw(g);
+
+        enemyOne.draw(g);
+        enemyTwo.draw(g);
+        enemyThree.draw(g);
+        enemyFour.draw(g);
+
+        latitudeOne.draw(g);
+        latitudeTwo.draw(g);
+        latitudeThree.draw(g);
+        latitudeFour.draw(g);
+        latitudeFive.draw(g);
+        latitudeSix.draw(g);
     }
 
     public void move() {
@@ -204,6 +252,13 @@ public class GamePanel extends JPanel implements Runnable {
         moveThree.move();
         moveFour.move();
         moveFive.move();
+
+        latitudeOne.move();
+        latitudeTwo.move();
+        latitudeThree.move();
+        latitudeFour.move();
+        latitudeFive.move();
+        latitudeSix.move();
     }
     
     public void checkCollision(){
@@ -269,12 +324,9 @@ public class GamePanel extends JPanel implements Runnable {
             death();
         }
         if(barrierTwo.intersects(paddle1)){
-            death();
+            //death();
         }
         if(moveOne.intersects(paddle1)){
-            death();
-        }
-        if(moveTwo.intersects(paddle1)){
             death();
         }
         if(moveTwo.intersects(paddle1)){
@@ -289,6 +341,41 @@ public class GamePanel extends JPanel implements Runnable {
         if(moveFive.intersects(paddle1)){
             death();
         }
+        if(secondDoor.intersects(paddle1)){
+            removeBarriers();
+            newPaddles();
+            newEnemies();
+        }
+
+        if(enemyOne.intersects(paddle1)){
+            death();
+        }
+        if(enemyTwo.intersects(paddle1)){
+            death();
+        }
+        if(enemyThree.intersects(paddle1)){
+            death();
+        }
+        if(enemyFour.intersects(paddle1)){
+            death();
+        }
+        if(latitudeOne.intersects(paddle1)){
+            death();
+        }
+        if(latitudeTwo.intersects(paddle1)){
+            death();
+        }
+        if(latitudeThree.intersects(paddle1)){
+            death();
+        }
+        if(latitudeFour.intersects(paddle1)){
+            death();
+        }
+        if(latitudeFive.intersects(paddle1)){
+            death();
+        }
+        if(latitudeSix.intersects(paddle1)){death();}
+
     }
 
     public void run() {
