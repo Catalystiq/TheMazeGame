@@ -2,12 +2,12 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class Paddle extends Rectangle{
+public class Player extends Rectangle{
     int yVelocity;
     int xVelocity;
     int speed = 5;
 
-    Paddle(int x, int y, int w, int h){
+    Player(int x, int y, int w, int h){
         super(x, y, w, h);
     }
 

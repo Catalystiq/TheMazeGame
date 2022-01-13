@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -20,8 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Image image;
     Graphics graphics;
-    Random random;
-    Paddle paddle1;
+    Player player;
     Obstacle borderBottom;
     Obstacle borderTop;
     Obstacle borderLeft;
@@ -66,9 +64,10 @@ public class GamePanel extends JPanel implements Runnable {
     EnemyLongitude longitudeOne;
     EnemyLongitude longitudeTwo;
     EnemyLongitude longitudeThree;
+    Door thirdDoor;
 
     GamePanel() {
-        newPaddles();
+        newPlayers();
         newObstacles();
         this.setFocusable(true);
         this.addKeyListener(new AL());
@@ -123,6 +122,7 @@ public class GamePanel extends JPanel implements Runnable {
         longitudeOne = new EnemyLongitude(GAME_HEIGHT/2, 411, 0, 0, 0);
         longitudeTwo = new EnemyLongitude(GAME_HEIGHT/2, 248, 0, 0, 0);
         longitudeThree = new EnemyLongitude(GAME_HEIGHT/2, 85, 0, 0, 0);
+        thirdDoor = new Door(GAME_WIDTH-85, 20, 0, 0);
     }
 
     public void removeObstacles(){
@@ -191,18 +191,42 @@ public class GamePanel extends JPanel implements Runnable {
         longitudeOne = new EnemyLongitude(GAME_HEIGHT/2, 411, 50, 50, 21);
         longitudeTwo = new EnemyLongitude(GAME_HEIGHT/2, 248, 50, 50, 23);
         longitudeThree = new EnemyLongitude(GAME_HEIGHT/2, 85,  50, 50, 25);
+        thirdDoor = new Door(GAME_WIDTH-85, 20, 65, 65);
     }
 
-    public void newPaddles() {
-        paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
+    public void removeEnemies(){
+        enemyOne = new Enemy(0, GAME_HEIGHT-6, 0, 0);
+        enemyTwo = new Enemy(0, 0, 0, 0);
+        enemyThree = new Enemy(0, 0, 0, 0);
+        enemyFour = new Enemy(GAME_WIDTH-6, 0, 0, 0);
+
+        latitudeOne = new EnemyLatitude(85, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeTwo = new EnemyLatitude(248, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeThree = new EnemyLatitude(411, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeFour = new EnemyLatitude(574, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeFive = new EnemyLatitude(737, GAME_HEIGHT/2, 0, 0, 0);
+        latitudeSix = new EnemyLatitude(900, GAME_HEIGHT/2, 0, 0, 0);
+
+        longitudeOne = new EnemyLongitude(GAME_HEIGHT/2, 411, 0, 0, 0);
+        longitudeTwo = new EnemyLongitude(GAME_HEIGHT/2, 248, 0, 0, 0);
+        longitudeThree = new EnemyLongitude(GAME_HEIGHT/2, 85,  0, 0, 0);
+        thirdDoor = new Door(GAME_WIDTH-85, 20, 0, 0);
+    }
+
+    public void newPlayers() {
+        player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         level += 1;
         System.out.println("level: " + level);
     }
 
     public void death(){
-        paddle1 = new Paddle(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
+        player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         deaths += 1;
         System.out.println("deaths: " + deaths);
+    }
+    public void removePlayer(){
+        player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70, 0, 0);
+        this.removeAll();
     }
 
     public void paint(Graphics g) {
@@ -213,7 +237,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void draw(Graphics g) {
-        paddle1.draw(g);
+        player.draw(g);
         borderBottom.draw(g);
         borderTop.draw(g);
         borderLeft.draw(g);
@@ -259,10 +283,11 @@ public class GamePanel extends JPanel implements Runnable {
         longitudeOne.draw(g);
         longitudeTwo.draw(g);
         longitudeThree.draw(g);
+        thirdDoor.draw(g);
     }
 
     public void move() {
-        paddle1.move();
+        player.move();
         moveOne.move();
         moveTwo.move();
         moveThree.move();
@@ -282,57 +307,62 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void checkCollision(){
-        if(borderBottom.intersects(paddle1)){death();}
-        if(borderTop.intersects(paddle1)){death();}
-        if(borderLeft.intersects(paddle1)){death();}
-        if(borderRight.intersects(paddle1)){death();}
-        if(bottomWall.intersects(paddle1)){death();}
-        if(bottomBlock.intersects(paddle1)){/*death();*/}
-        if(sideWall.intersects(paddle1)){death();}
-        if(wallOne.intersects(paddle1)){death();}
-        if(topWall.intersects(paddle1)){death();}
-        if(wallTwo.intersects(paddle1)){death();}
-        if(middleWall.intersects(paddle1)){death();}
-        if(wallThree.intersects(paddle1)){death();}
-        if(wallFour.intersects(paddle1)){death();}
-        if(firstDoor.intersects(paddle1)){
+        if(borderBottom.intersects(player)){death();}
+        if(borderTop.intersects(player)){death();}
+        if(borderLeft.intersects(player)){death();}
+        if(borderRight.intersects(player)){death();}
+        if(bottomWall.intersects(player)){death();}
+        if(bottomBlock.intersects(player)){/*death();*/}
+        if(sideWall.intersects(player)){death();}
+        if(wallOne.intersects(player)){death();}
+        if(topWall.intersects(player)){death();}
+        if(wallTwo.intersects(player)){death();}
+        if(middleWall.intersects(player)){death();}
+        if(wallThree.intersects(player)){death();}
+        if(wallFour.intersects(player)){death();}
+        if(firstDoor.intersects(player)){
             removeObstacles();
-            newPaddles();
+            newPlayers();
             newBarriers();
         }
 
-        if(barrierBottom.intersects(paddle1)){death();}
-        if(barrierTop.intersects(paddle1)){death();}
-        if(barrierLeft.intersects(paddle1)){death();}
-        if(barrierRight.intersects(paddle1)){death();}
+        if(barrierBottom.intersects(player)){death();}
+        if(barrierTop.intersects(player)){death();}
+        if(barrierLeft.intersects(player)){death();}
+        if(barrierRight.intersects(player)){death();}
 
-        if(barrierOne.intersects(paddle1)){death();}
-        if(barrierTwo.intersects(paddle1)){/*death();*/}
-        if(moveOne.intersects(paddle1)){death();}
-        if(moveTwo.intersects(paddle1)){death();}
-        if(moveThree.intersects(paddle1)){death();}
-        if(moveFour.intersects(paddle1)){death();}
-        if(moveFive.intersects(paddle1)){death();}
-        if(secondDoor.intersects(paddle1)){
+        if(barrierOne.intersects(player)){death();}
+        if(barrierTwo.intersects(player)){/*death();*/}
+        if(moveOne.intersects(player)){death();}
+        if(moveTwo.intersects(player)){death();}
+        if(moveThree.intersects(player)){death();}
+        if(moveFour.intersects(player)){death();}
+        if(moveFive.intersects(player)){death();}
+        if(secondDoor.intersects(player)){
             removeBarriers();
-            newPaddles();
-            newEnemies();}
+            newPlayers();
+            newEnemies();
+        }
 
-        if(enemyOne.intersects(paddle1)){death();}
-        if(enemyTwo.intersects(paddle1)){death();}
-        if(enemyThree.intersects(paddle1)){death();}
-        if(enemyFour.intersects(paddle1)){death();}
-        if(latitudeOne.intersects(paddle1)){death();}
-        if(latitudeTwo.intersects(paddle1)){death();}
-        if(latitudeThree.intersects(paddle1)){death();}
-        if(latitudeFour.intersects(paddle1)){death();}
-        if(latitudeFive.intersects(paddle1)){death();}
-        if(latitudeSix.intersects(paddle1)){death();}
+        // if(enemyOne.intersects(player)){death();}
+        // if(enemyTwo.intersects(player)){death();}
+        // if(enemyThree.intersects(player)){death();}
+        // if(enemyFour.intersects(player)){death();}
+        // if(latitudeOne.intersects(player)){death();}
+        // if(latitudeTwo.intersects(player)){death();}
+        // if(latitudeThree.intersects(player)){death();}
+        // if(latitudeFour.intersects(player)){death();}
+        // if(latitudeFive.intersects(player)){death();}
+        // if(latitudeSix.intersects(player)){death();}
 
-        if(longitudeOne.intersects(paddle1)){death();}
-        if(longitudeTwo.intersects(paddle1)){death();}
-        if(longitudeThree.intersects(paddle1)){death();}
+        // if(longitudeOne.intersects(player)){death();}
+        // if(longitudeTwo.intersects(player)){death();}
+        // if(longitudeThree.intersects(player)){death();}
 
+        if(thirdDoor.intersects(player)){
+            removeEnemies();
+            removePlayer();
+        }
     }
 
     public void run() {
@@ -357,11 +387,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            paddle1.keyPressed(e);
+            player.keyPressed(e);
         }
 
         public void keyReleased(KeyEvent e) {
-            paddle1.keyReleased(e);
+            player.keyReleased(e);
         }
     }
 }
