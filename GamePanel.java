@@ -14,12 +14,14 @@ public class GamePanel extends JPanel implements Runnable {
     static final int PADDLE_HEIGHT = 50;
     static int deaths = 0;
     static int level = 0;
+    static int time = 0;
 
     //instances
     Thread gameThread;
     Image image;
     Graphics graphics;
     Player player;
+    Text text;
     Obstacle borderBottom;
     Obstacle borderTop;
     Obstacle borderLeft;
@@ -70,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
         newPlayers();
         newObstacles();
         this.setFocusable(true);
-        this.addKeyListener(new AL());
+        this.addKeyListener(new KeyListener());
         this.setPreferredSize(SCREEN_SIZE);
 
         gameThread = new Thread(this);
@@ -78,6 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void newObstacles(){
+        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
+
         borderBottom = new Obstacle(0, GAME_HEIGHT-6, GAME_WIDTH, 6);
         borderTop = new Obstacle(0, 0, GAME_WIDTH, 6);
         borderLeft = new Obstacle(0, 0, 6, GAME_HEIGHT);
@@ -150,12 +154,12 @@ public class GamePanel extends JPanel implements Runnable {
         barrierRight = new Barrier(GAME_WIDTH-6, 0, 6, GAME_HEIGHT);
 
         barrierOne = new Barrier(0, 0, GAME_WIDTH, 160);
-        barrierTwo = new Barrier(85, GAME_HEIGHT-140, GAME_WIDTH-185, 160);
-        moveOne = new MovingBarrier(85, GAME_HEIGHT/2, 50, 50, 5);
-        moveTwo = new MovingBarrier(248, GAME_HEIGHT/2, 50, 50, 7);
-        moveThree = new MovingBarrier(411, GAME_HEIGHT/2, 50, 50, 9);
-        moveFour = new MovingBarrier(574, GAME_HEIGHT/2, 50, 50, 10);
-        moveFive = new MovingBarrier(737, GAME_HEIGHT/2, 50, 50, 11);
+        barrierTwo = new Barrier(115, GAME_HEIGHT-140, GAME_WIDTH-215, 160);
+        moveOne = new MovingBarrier(115, GAME_HEIGHT/2, 50, 50, 5);
+        moveTwo = new MovingBarrier(278, GAME_HEIGHT/2, 50, 50, 7);
+        moveThree = new MovingBarrier(441, GAME_HEIGHT/2, 50, 50, 9);
+        moveFour = new MovingBarrier(604, GAME_HEIGHT/2, 50, 50, 10);
+        moveFive = new MovingBarrier(767, GAME_HEIGHT/2, 50, 50, 11);
         secondDoor = new Door(GAME_WIDTH-85, GAME_HEIGHT-85, 65, 65);
     }
 
@@ -216,17 +220,18 @@ public class GamePanel extends JPanel implements Runnable {
     public void newPlayers() {
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         level += 1;
+        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
         System.out.println("level: " + level);
     }
 
     public void death(){
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         deaths += 1;
+        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
         System.out.println("deaths: " + deaths);
     }
     public void removePlayer(){
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70, 0, 0);
-        this.removeAll();
     }
 
     public void paint(Graphics g) {
@@ -238,6 +243,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void draw(Graphics g) {
         player.draw(g);
+        text.draw(g);
+
         borderBottom.draw(g);
         borderTop.draw(g);
         borderLeft.draw(g);
@@ -344,10 +351,10 @@ public class GamePanel extends JPanel implements Runnable {
             newEnemies();
         }
 
-        // if(enemyOne.intersects(player)){death();}
-        // if(enemyTwo.intersects(player)){death();}
-        // if(enemyThree.intersects(player)){death();}
-        // if(enemyFour.intersects(player)){death();}
+        if(enemyOne.intersects(player)){death();}
+        if(enemyTwo.intersects(player)){death();}
+        if(enemyThree.intersects(player)){death();}
+        if(enemyFour.intersects(player)){death();}
         // if(latitudeOne.intersects(player)){death();}
         // if(latitudeTwo.intersects(player)){death();}
         // if(latitudeThree.intersects(player)){death();}
@@ -377,6 +384,7 @@ public class GamePanel extends JPanel implements Runnable {
             delta += (now-lastTime)/ns;
             lastTime = now;
             if(delta >=1){
+                time += 1;
                 move();
                 checkCollision();
                 repaint();
@@ -385,7 +393,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public class AL extends KeyAdapter {
+    public class KeyListener extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
         }
