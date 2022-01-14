@@ -339,7 +339,7 @@ public class GamePanel extends JPanel implements Runnable {
         if(barrierRight.intersects(player)){death();}
 
         if(barrierOne.intersects(player)){death();}
-        if(barrierTwo.intersects(player)){/*death();*/}
+        if(barrierTwo.intersects(player)){death();}
         if(moveOne.intersects(player)){death();}
         if(moveTwo.intersects(player)){death();}
         if(moveThree.intersects(player)){death();}
@@ -355,16 +355,16 @@ public class GamePanel extends JPanel implements Runnable {
         if(enemyTwo.intersects(player)){death();}
         if(enemyThree.intersects(player)){death();}
         if(enemyFour.intersects(player)){death();}
-        // if(latitudeOne.intersects(player)){death();}
-        // if(latitudeTwo.intersects(player)){death();}
-        // if(latitudeThree.intersects(player)){death();}
-        // if(latitudeFour.intersects(player)){death();}
-        // if(latitudeFive.intersects(player)){death();}
-        // if(latitudeSix.intersects(player)){death();}
+        if(latitudeOne.intersects(player)){death();}
+        if(latitudeTwo.intersects(player)){death();}
+        if(latitudeThree.intersects(player)){death();}
+        if(latitudeFour.intersects(player)){death();}
+        if(latitudeFive.intersects(player)){death();}
+        if(latitudeSix.intersects(player)){death();}
 
-        // if(longitudeOne.intersects(player)){death();}
-        // if(longitudeTwo.intersects(player)){death();}
-        // if(longitudeThree.intersects(player)){death();}
+        if(longitudeOne.intersects(player)){death();}
+        if(longitudeTwo.intersects(player)){death();}
+        if(longitudeThree.intersects(player)){death();}
 
         if(thirdDoor.intersects(player)){
             removeEnemies();
