@@ -322,7 +322,7 @@ public class GamePanel extends JPanel implements Runnable {
         if(borderLeft.intersects(player)){death();}
         if(borderRight.intersects(player)){death();}
         if(bottomWall.intersects(player)){death();}
-        if(bottomBlock.intersects(player)){/*death();*/}
+        if(bottomBlock.intersects(player)){death();}
         if(sideWall.intersects(player)){death();}
         if(wallOne.intersects(player)){death();}
         if(topWall.intersects(player)){death();}
