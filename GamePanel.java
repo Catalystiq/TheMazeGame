@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     static int deaths = 0;
     static int level = 0;
     static int time = 0;
+    static boolean win = false;
 
     //instances
     Thread gameThread;
@@ -80,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void newObstacles(){
-        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
+        text = new Text(win, time, level, deaths, GAME_WIDTH, GAME_HEIGHT);
 
         borderBottom = new Obstacle(0, GAME_HEIGHT-6, GAME_WIDTH, 6);
         borderTop = new Obstacle(0, 0, GAME_WIDTH, 6);
@@ -220,18 +221,20 @@ public class GamePanel extends JPanel implements Runnable {
     public void newPlayers() {
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         level += 1;
-        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
+        text = new Text(win, time, level, deaths, GAME_WIDTH, GAME_HEIGHT);
         System.out.println("level: " + level);
     }
 
     public void death(){
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70,PADDLE_WIDTH,PADDLE_HEIGHT);
         deaths += 1;
-        text = new Text(level, deaths, GAME_WIDTH, GAME_HEIGHT);
+        text = new Text(win, time, level, deaths, GAME_WIDTH, GAME_HEIGHT);
         System.out.println("deaths: " + deaths);
     }
     public void removePlayer(){
         player = new Player(GAME_WIDTH-GAME_WIDTH+20,GAME_HEIGHT-70, 0, 0);
+        win = true;
+        text = new Text(win, time, level, deaths, GAME_WIDTH, GAME_HEIGHT);
     }
 
     public void paint(Graphics g) {
@@ -384,7 +387,10 @@ public class GamePanel extends JPanel implements Runnable {
             delta += (now-lastTime)/ns;
             lastTime = now;
             if(delta >=1){
-                time += 1;
+                if(win != true){
+                    time += 1;
+                    text = new Text(win, time, level, deaths, GAME_WIDTH, GAME_HEIGHT);
+                }
                 move();
                 checkCollision();
                 repaint();
